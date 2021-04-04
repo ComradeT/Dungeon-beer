@@ -52,7 +52,7 @@ const grid = {
         return emptyCells[ Math.floor(Math.random() * emptyCells.length) ];
     },
     checkGameOver: function(){
-        if(Hero.number === 0){
+        if(Hero.number <= 0){
             return true
         }
     },

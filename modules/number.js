@@ -6,12 +6,8 @@ const number = {
         return Math.floor(rand);
     },
     spawnCard: function() {
-        function randomInteger(min, max) {
-            // случайное число от min до (max+1)
-            let rand = min + Math.random() * (max + 1 - min);
-            return Math.floor(rand);
-        }
-        let randomNumber = randomInteger(1, 100);
+
+        let randomNumber = this.randomValue(1, 100);
 
         if (randomNumber >= 40) {
             this.spawn();
