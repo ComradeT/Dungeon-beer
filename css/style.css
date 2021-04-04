@@ -1,0 +1,59 @@
+body, html {width: 100%; height: 100%; overflow: hidden;}
+
+.wrapper{
+    width: 68vmin;
+    height: 68vmin; 
+    margin: 0 auto; 
+    background-color:#aaaca8;
+}
+.grid {
+    width: 100%;
+    position: relative;
+}
+.cell{
+    width: 20vmin;
+    height: 20vmin;
+    margin: 2vmin 2vmin 0 0;
+    background-color: #c5c6be;
+    float: left;
+}
+.cell:nth-child(3n+1) {
+    margin-left: 2vmin;
+}
+.number{
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 5vmin;
+    font-weight: bold;
+    text-align: center;
+    line-height: 15vmin;
+    color: #fff;
+    transition: all .3s;
+    background-image: url(../img/troll.svg);
+}
+.heal{
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 5vmin;
+    font-weight: bold;
+    text-align: center;
+    line-height: 15vmin;
+    background-image: url(../img/carrot.svg);
+    color: #fff;
+    transition: all .3s;
+}
+.hero{
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 5vmin;
+    font-weight: bold;
+    text-align: center;
+    line-height: 15vmin;
+    color: #fff;
+    transition: all .3s;
+    z-index: 3;
+    background-image: url(../img/visored-helm.svg);
+}
