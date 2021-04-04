@@ -10,7 +10,7 @@ let Hero = {
         this.cell_number = emptyCellIndex;
         const heroElement = document.createElement("div");
 
-        heroElement.innerText = this.number;
+        
         heroElement.dataset.value = this.number;
         heroElement.classList.add("hero");
         
@@ -18,6 +18,15 @@ let Hero = {
         heroElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
 
         grid.cells[emptyCellIndex].number = heroElement;
+
+        const cardWapper = document.createElement('div');
+        cardWapper.classList.add("card__wrapper");
+        heroElement.append(cardWapper);
+
+        const healthValue =  document.createElement('div');
+        healthValue.classList.add("card__health");
+        cardWapper.append(healthValue);
+        healthValue.innerText = this.number;
 
         grid.gridElement.append(heroElement);
         return true;
@@ -121,11 +130,11 @@ function relocate(from_Cell, to_Cell, behind_cell){
     if(to_Cell.number.className === 'number') {
         grid.gridElement.removeChild(to_Cell.number);
         Hero.number -= +to_Cell.number.dataset.value;
-        from_Cell.number.innerText = Hero.number;
+        from_Cell.number.lastElementChild.lastElementChild.innerText = Hero.number;
     } else if(to_Cell.number.className === 'heal') {
         grid.gridElement.removeChild(to_Cell.number);
         Hero.number += +to_Cell.number.dataset.value;
-        from_Cell.number.innerText = Hero.number;
+        from_Cell.number.lastElementChild.lastElementChild.innerText = Hero.number;
     }
 
     from_Cell.number.style.top = `${to_Cell.top}px`;

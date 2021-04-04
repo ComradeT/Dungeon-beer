@@ -1,6 +1,10 @@
 import grid from './grid.js';
 
 const number = {
+    randomValue: function(min, max) {
+        let rand = min + Math.random() * (max + 1 - min);
+        return Math.floor(rand);
+    },
     spawnCard: function() {
         function randomInteger(min, max) {
             // случайное число от min до (max+1)
@@ -23,10 +27,11 @@ const number = {
             return false;
         }
         
-        const numberElement = document.createElement("div");
-        const numberValue = 2;
+        let randomHealth = this.randomValue(2, 5);
 
-        numberElement.innerText = numberValue;
+        const numberElement = document.createElement("div");
+        const numberValue = randomHealth;
+
         numberElement.dataset.value = numberValue; //пригодиться для сложения чисел
         numberElement.classList.add("number");
 
@@ -34,6 +39,15 @@ const number = {
         numberElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
 
         grid.cells[emptyCellIndex].number = numberElement;
+
+        const cardWapper = document.createElement('div');
+        cardWapper.classList.add("card__wrapper");
+        numberElement.append(cardWapper);
+
+        const healthValue =  document.createElement('div');
+        healthValue.classList.add("card__health");
+        cardWapper.append(healthValue);
+        healthValue.innerText = numberValue;
 
         grid.gridElement.append(numberElement);
         
@@ -46,10 +60,11 @@ const number = {
             return false;
         }
         
-        const healElement = document.createElement("div");
-        const numberValue = 2;
+        let randomHealth = this.randomValue(2, 8);
 
-        healElement.innerText = numberValue;
+        const healElement = document.createElement("div");
+        const numberValue = randomHealth;
+
         healElement.dataset.value = numberValue; //пригодиться для сложения чисел
         healElement.classList.add("heal");
 
@@ -57,6 +72,15 @@ const number = {
         healElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
 
         grid.cells[emptyCellIndex].number = healElement;
+
+        const cardWapper = document.createElement('div');
+        cardWapper.classList.add("card__wrapper");
+        healElement.append(cardWapper);
+
+        const healthValue =  document.createElement('div');
+        healthValue.classList.add("card__health");
+        cardWapper.append(healthValue);
+        healthValue.innerText = numberValue;
 
         grid.gridElement.append(healElement);
         
