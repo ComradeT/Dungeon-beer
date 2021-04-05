@@ -9,9 +9,11 @@ const number = {
 
         let randomNumber = this.randomValue(1, 100);
 
-        if (randomNumber >= 40) {
+        if (randomNumber >= 50) {
             this.spawn();
-        } else {
+        } else if(randomNumber <= 20) {
+            this.spawnWeapon();
+        } else if (randomNumber <= 50){
             this.spawnHeal();
         }
 
@@ -41,7 +43,7 @@ const number = {
         numberElement.append(cardWapper);
 
         const healthValue =  document.createElement('div');
-        healthValue.classList.add("card__health");
+        healthValue.classList.add("health");
         cardWapper.append(healthValue);
         healthValue.innerText = numberValue;
 
@@ -74,11 +76,44 @@ const number = {
         healElement.append(cardWapper);
 
         const healthValue =  document.createElement('div');
-        healthValue.classList.add("card__health");
+        healthValue.classList.add("health");
         cardWapper.append(healthValue);
         healthValue.innerText = numberValue;
 
         grid.gridElement.append(healElement);
+        
+        return true;
+    },
+    spawnWeapon: function() {
+        const emptyCellIndex = grid.randomEmptyCellIndex(); //случайное число от 1-9 либо false
+
+        if(emptyCellIndex === false) {
+            return false;
+        }
+        
+        let randomWeapon = this.randomValue(2, 8);
+
+        const weaponElement = document.createElement("div");
+        const numberValue = randomWeapon;
+
+        weaponElement.dataset.value = numberValue; 
+        weaponElement.classList.add("weapon");
+
+        weaponElement.style.top = `${grid.cells[emptyCellIndex].top}px`;
+        weaponElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
+
+        grid.cells[emptyCellIndex].number = weaponElement;
+
+        const cardWapper = document.createElement('div');
+        cardWapper.classList.add("card__wrapper");
+        weaponElement.append(cardWapper);
+
+        const healthValue =  document.createElement('div');
+        healthValue.classList.add("health");
+        cardWapper.append(healthValue);
+        healthValue.innerText = numberValue;
+
+        grid.gridElement.append(weaponElement);
         
         return true;
     },

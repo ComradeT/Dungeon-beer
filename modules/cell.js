@@ -4,6 +4,7 @@ import number from './number.js';
 let Hero = {
     number: 10,
     cell_number: null,
+    attack: 0,
 
     spawn_Hero: function() {
         const emptyCellIndex = 5;
@@ -24,9 +25,14 @@ let Hero = {
         heroElement.append(cardWapper);
 
         const healthValue =  document.createElement('div');
-        healthValue.classList.add("card__health");
+        healthValue.classList.add("health");
         cardWapper.append(healthValue);
         healthValue.innerText = this.number;
+
+        const attackValue = document.createElement('div');
+        attackValue.classList.add("attack");
+        cardWapper.append(attackValue);
+        attackValue.innerText = this.attack;
 
         grid.gridElement.append(heroElement);
         return true;
@@ -142,23 +148,46 @@ function moveToCell(from_Cell, direction){
 };
 
 function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
+    let toCellValue = to_Cell.number.dataset.value;
 
     if(to_Cell.number.className === 'number') {
-        grid.gridElement.removeChild(to_Cell.number);
-        Hero.number -= +to_Cell.number.dataset.value;
-        from_Cell.number.lastElementChild.lastElementChild.innerText = Hero.number;
+        if(Hero.attack > 0){
+            if(Hero.attack < toCellValue){
+                toCellValue -= Hero.attack;
+                to_Cell.number.childNodes[0].childNodes[0].innerText = toCellValue;
+                Hero.attack -= Hero.attack;
+                from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
+                return false;
+            } else if(Hero.attack >= toCellValue) {
+                Hero.attack -= +toCellValue;
+                from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
+                grid.gridElement.removeChild(to_Cell.number);
+            }
+        } else{
+            grid.gridElement.removeChild(to_Cell.number);
+            Hero.number -= +toCellValue;
+            from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
+        }
     } else if(to_Cell.number.className === 'heal') {
         grid.gridElement.removeChild(to_Cell.number);
         if (Hero.number < 10) {
             let lackHealth = (10 - Hero.number);
-            if (to_Cell.number.dataset.value <= lackHealth){
-                Hero.number += +to_Cell.number.dataset.value;
-                from_Cell.number.lastElementChild.lastElementChild.innerText = Hero.number;
+            if (toCellValue <= lackHealth){
+                Hero.number += +toCellValue;
+                from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
             } else {
-                let remainsHealth = to_Cell.number.dataset.value - lackHealth;
-                Hero.number += +to_Cell.number.dataset.value - remainsHealth;
-                from_Cell.number.lastElementChild.lastElementChild.innerText = Hero.number;
+                let remainsHealth = toCellValue - lackHealth;
+                Hero.number += +toCellValue - remainsHealth;
+                from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
             }
+        }
+    } else if(to_Cell.number.className === 'weapon') {
+        if (Hero.attack < toCellValue) {
+            grid.gridElement.removeChild(to_Cell.number);
+            Hero.attack = +toCellValue;
+            from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
+        } else{
+            grid.gridElement.removeChild(to_Cell.number);
         }
     }
 
