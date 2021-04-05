@@ -76,7 +76,7 @@ const number = {
         healElement.append(cardWapper);
 
         const healthValue =  document.createElement('div');
-        healthValue.classList.add("health");
+        healthValue.classList.add("value");
         cardWapper.append(healthValue);
         healthValue.innerText = numberValue;
 
@@ -109,7 +109,7 @@ const number = {
         weaponElement.append(cardWapper);
 
         const healthValue =  document.createElement('div');
-        healthValue.classList.add("health");
+        healthValue.classList.add("value");
         cardWapper.append(healthValue);
         healthValue.innerText = numberValue;
 

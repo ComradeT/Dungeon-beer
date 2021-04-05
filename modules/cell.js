@@ -157,16 +157,17 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
                 to_Cell.number.childNodes[0].childNodes[0].innerText = toCellValue;
                 Hero.attack -= Hero.attack;
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
-                return false;
+                return;
             } else if(Hero.attack >= toCellValue) {
                 Hero.attack -= +toCellValue;
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
                 grid.gridElement.removeChild(to_Cell.number);
             }
         } else{
-            grid.gridElement.removeChild(to_Cell.number);
+            //to_Cell.number.style.transform = 'scale(0)';
             Hero.number -= +toCellValue;
             from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
+            grid.gridElement.removeChild(to_Cell.number);
         }
     } else if(to_Cell.number.className === 'heal') {
         grid.gridElement.removeChild(to_Cell.number);
