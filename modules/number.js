@@ -9,11 +9,13 @@ const number = {
 
         let randomNumber = this.randomValue(1, 100);
 
-        if (randomNumber >= 50) {
+        if (randomNumber >= 60) {
             this.spawn();
         } else if(randomNumber <= 20) {
+            this.spawnCoin();
+        } else if (randomNumber <= 40){
             this.spawnWeapon();
-        } else if (randomNumber <= 50){
+        } else if (randomNumber <= 60) {
             this.spawnHeal();
         }
 
@@ -114,6 +116,39 @@ const number = {
         healthValue.innerText = numberValue;
 
         grid.gridElement.append(weaponElement);
+        
+        return true;
+    },
+    spawnCoin: function() {
+        const emptyCellIndex = grid.randomEmptyCellIndex(); //случайное число от 1-9 либо false
+
+        if(emptyCellIndex === false) {
+            return false;
+        }
+        
+        //let randomCoin = this.randomValue(2, 8);
+
+        const coinElement = document.createElement("div");
+        const numberValue = 1;
+
+        coinElement.dataset.value = numberValue; 
+        coinElement.classList.add("coin");
+
+        coinElement.style.top = `${grid.cells[emptyCellIndex].top}px`;
+        coinElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
+
+        grid.cells[emptyCellIndex].number = coinElement;
+
+        const cardWapper = document.createElement('div');
+        cardWapper.classList.add("card__wrapper");
+        coinElement.append(cardWapper);
+
+        const healthValue =  document.createElement('div');
+        healthValue.classList.add("value");
+        cardWapper.append(healthValue);
+        healthValue.innerText = numberValue;
+
+        grid.gridElement.append(coinElement);
         
         return true;
     },

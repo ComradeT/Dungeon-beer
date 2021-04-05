@@ -6,13 +6,43 @@ body, html {
 }
 
 .wrapper{
-    width: 68vmin;
-    height: 68vmin; 
+    width: 68vmin; 
     margin: 0 auto; 
     background-color:#aaaca8;
 }
+.panel{
+    width: 100%;
+    height: 10vmin;
+    background-color: rgb(95, 64, 29);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gold{
+    position: relative;
+    width: 5vmin;
+    height: 5vmin;
+    text-align: center;
+    font-size: 3.5vmin;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+}
+.gold:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -5vmin;
+    width: 5vmin;
+    height: 5vmin;
+    background-image: url(../img/coin.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 .grid {
     width: 100%;
+    height: 68vmin; 
     position: relative;
 }
 .cell{
@@ -32,7 +62,7 @@ body, html {
     font-size: 3.5vmin;
     font-weight: bold;
     text-align: center;
-    line-height: 15vmin;
+    line-height: 5vmin;
     color: #fff;
     transition: all .3s;
     background-image: url(../img/orc.svg);
@@ -48,7 +78,7 @@ body, html {
     font-size: 3.5vmin;
     font-weight: bold;
     text-align: center;
-    line-height: 15vmin;
+    line-height: 5vmin;
     background-image: url(../img/beer-mug.svg);
     background-size: 60%;
     background-position: center;
@@ -64,12 +94,29 @@ body, html {
     font-size: 3.5vmin;
     font-weight: bold;
     text-align: center;
-    line-height: 15vmin;
+    line-height: 5vmin;
     color: #fff;
     transition: all .3s;
     z-index: 3;
     background-image: url(../img/axe.svg);
     background-size: 62%;
+    background-color: #383636;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.coin{
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 3.5vmin;
+    font-weight: bold;
+    text-align: center;
+    line-height: 5vmin;
+    color: #fff;
+    transition: all .3s;
+    z-index: 3;
+    background-image: url(../img/coin.svg);
+    background-size: 50%;
     background-color: #383636;
     background-repeat: no-repeat;
     background-position: center;
@@ -81,7 +128,7 @@ body, html {
     font-size: 3.5vmin;
     font-weight: bold;
     text-align: center;
-    line-height: 15vmin;
+    line-height: 5vmin;
     color: #fff;
     transition: all .3s;
     z-index: 3;

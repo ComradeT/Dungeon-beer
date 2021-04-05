@@ -5,6 +5,7 @@ let Hero = {
     number: 10,
     cell_number: null,
     attack: 0,
+    gold: 0,
 
     spawn_Hero: function() {
         const emptyCellIndex = 5;
@@ -155,6 +156,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
             if(Hero.attack < toCellValue){
                 toCellValue -= Hero.attack;
                 to_Cell.number.childNodes[0].childNodes[0].innerText = toCellValue;
+                to_Cell.number.dataset.value = toCellValue;
                 Hero.attack -= Hero.attack;
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
                 return;
@@ -162,6 +164,9 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
                 Hero.attack -= +toCellValue;
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
                 grid.gridElement.removeChild(to_Cell.number);
+                to_Cell.number = null;
+                number.spawnCoin();
+                return;
             }
         } else{
             //to_Cell.number.style.transform = 'scale(0)';
@@ -190,6 +195,11 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         } else{
             grid.gridElement.removeChild(to_Cell.number);
         }
+    } else if(to_Cell.number.className === 'coin') {
+        grid.gridElement.removeChild(to_Cell.number);
+        let goldPanel = document.querySelector('.gold');
+        Hero.gold += +toCellValue;
+        goldPanel.innerText = Hero.gold;
     }
 
     from_Cell.number.style.top = `${to_Cell.top}px`;
