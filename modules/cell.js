@@ -176,8 +176,8 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         }
     } else if(to_Cell.number.className === 'heal') {
         grid.gridElement.removeChild(to_Cell.number);
-        if (Hero.number < 10) {
-            let lackHealth = (10 - Hero.number);
+        if (Hero.number < from_Cell.number.dataset.value) {
+            let lackHealth = (from_Cell.number.dataset.value - Hero.number);
             if (toCellValue <= lackHealth){
                 Hero.number += +toCellValue;
                 from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
@@ -221,6 +221,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         behind_cell.number = two_behind_cell.number;
         two_behind_cell.number = null;
     }
+
 };
 
 export {Hero, moveToCell}
