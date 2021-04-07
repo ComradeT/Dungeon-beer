@@ -6,6 +6,7 @@ let Hero = {
     cell_number: null,
     attack: 0,
     gold: 0,
+    poisoned: false,
 
     spawn_Hero: function() {
         const emptyCellIndex = 5;
@@ -150,15 +151,37 @@ function moveToCell(from_Cell, direction){
 
 function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
     let toCellValue = to_Cell.number.dataset.value;
+    let toCellClass = to_Cell.number.className;
 
-    if(to_Cell.number.className === 'number') {
-        if(Hero.attack > 0){
+    if(toCellClass === 'number' || toCellClass === 'ghost') {
+        if (toCellClass === 'ghost' && to_Cell.disembodied === true){
+            let fromPosTop = from_Cell.top;
+            let fromPosLeft = from_Cell.left;
+            let toCellDiv = to_Cell.number;
+            from_Cell.number.style.top = `${to_Cell.top}px`;
+            from_Cell.number.style.left = `${to_Cell.left}px`;
+
+            to_Cell.number.style.top = `${fromPosTop}px`;
+            to_Cell.number.style.left = `${fromPosLeft}px`;
+            Hero.cell_number = to_Cell.cell_number;
+            to_Cell.number = from_Cell.number;
+            from_Cell.number = toCellDiv;
+
+            to_Cell.disembodied = false;
+            from_Cell.number.childNodes[0].childNodes[0].style.display = 'block';
+            return;
+        } else if(Hero.attack > 0){
             if(Hero.attack < toCellValue){
                 toCellValue -= Hero.attack;
                 to_Cell.number.childNodes[0].childNodes[0].innerText = toCellValue;
                 to_Cell.number.dataset.value = toCellValue;
                 Hero.attack -= Hero.attack;
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
+                if (toCellClass === 'ghost') {
+                    to_Cell.disembodied = true;
+                    to_Cell.number.childNodes[0].childNodes[0].style.display = 'none';
+                }
+                stepFinish();
                 return;
             } else if(Hero.attack >= toCellValue) {
                 Hero.attack -= +toCellValue;
@@ -166,6 +189,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
                 grid.gridElement.removeChild(to_Cell.number);
                 to_Cell.number = null;
                 number.spawnCoin();
+                stepFinish();
                 return;
             }
         } else{
@@ -174,8 +198,9 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
             from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
             grid.gridElement.removeChild(to_Cell.number);
         }
-    } else if(to_Cell.number.className === 'heal') {
+    } else if(toCellClass === 'heal') {
         grid.gridElement.removeChild(to_Cell.number);
+        Hero.poisoned = false;
         if (Hero.number < from_Cell.number.dataset.value) {
             let lackHealth = (from_Cell.number.dataset.value - Hero.number);
             if (toCellValue <= lackHealth){
@@ -187,7 +212,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
                 from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
             }
         }
-    } else if(to_Cell.number.className === 'weapon') {
+    } else if(toCellClass === 'weapon') {
         if (Hero.attack < toCellValue) {
             grid.gridElement.removeChild(to_Cell.number);
             Hero.attack = +toCellValue;
@@ -195,12 +220,17 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         } else{
             grid.gridElement.removeChild(to_Cell.number);
         }
-    } else if(to_Cell.number.className === 'coin') {
+    } else if(toCellClass === 'coin') {
         grid.gridElement.removeChild(to_Cell.number);
         let goldPanel = document.querySelector('.gold');
         Hero.gold += +toCellValue;
         goldPanel.innerText = Hero.gold;
+    } else if(toCellClass === 'poison'){
+        grid.gridElement.removeChild(to_Cell.number);
+        Hero.poisoned = true;
     }
+
+    stepFinish(from_Cell);
 
     from_Cell.number.style.top = `${to_Cell.top}px`;
     from_Cell.number.style.left = `${to_Cell.left}px`;
@@ -208,8 +238,15 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
     to_Cell.number = from_Cell.number;
     Hero.cell_number = to_Cell.cell_number;
 
-    behind_cell.number.style.top = `${from_Cell.top}px`;
-    behind_cell.number.style.left = `${from_Cell.left}px`;
+    if (behind_cell.number.className === 'ghost' && behind_cell.disembodied === true) {
+        behind_cell.number.style.top = `${from_Cell.top}px`;
+        behind_cell.number.style.left = `${from_Cell.left}px`;
+        from_Cell.disembodied = true;
+        behind_cell.disembodied = false;
+    } else {
+        behind_cell.number.style.top = `${from_Cell.top}px`;
+        behind_cell.number.style.left = `${from_Cell.left}px`;
+    }
 
     from_Cell.number = behind_cell.number;
     behind_cell.number = null;
@@ -223,5 +260,19 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
     }
 
 };
+
+function stepFinish() {
+    let heroValue = document.querySelector('.health');
+    let heroWrapper = document.querySelector('.card__wrapper');
+    if(Hero.poisoned === true) {
+        if (Hero.number > 1){
+            Hero.number -= 1;
+            heroWrapper.classList.add('poisoned');
+        }
+        heroValue.innerText = Hero.number;
+    } else {
+        heroWrapper.classList.remove('poisoned');
+    }
+}
 
 export {Hero, moveToCell}

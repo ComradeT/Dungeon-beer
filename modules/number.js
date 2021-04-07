@@ -9,31 +9,33 @@ const number = {
 
         let randomNumber = this.randomValue(1, 100);
 
-        if (randomNumber >= 60) {
-            this.spawn();
-        } else if(randomNumber <= 20) {
+        if(randomNumber <= 20) {
             this.spawnCoin();
+        } else if(randomNumber <= 30) {
+            this.spawnPoison();
         } else if (randomNumber <= 40){
             this.spawnWeapon();
         } else if (randomNumber <= 60) {
             this.spawnHeal();
+        } else if (randomNumber >= 80) {
+            this.spawn();
+        } else if (randomNumber >= 60) {
+            this.spawnGhost();
         }
 
     },
-    spawn: function() {
-        const emptyCellIndex = grid.randomEmptyCellIndex(); //случайное число от 1-9 либо false
+    createCard: function(randomHealth, elementClass, valueOrHealth) {
+        const emptyCellIndex = grid.randomEmptyCellIndex();
 
         if(emptyCellIndex === false) {
             return false;
         }
-        
-        let randomHealth = this.randomValue(2, 5);
 
         const numberElement = document.createElement("div");
         const numberValue = randomHealth;
 
-        numberElement.dataset.value = numberValue; //пригодиться для сложения чисел
-        numberElement.classList.add("number");
+        numberElement.dataset.value = numberValue; 
+        numberElement.classList.add(`${elementClass}`);
 
         numberElement.style.top = `${grid.cells[emptyCellIndex].top}px`;
         numberElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
@@ -45,111 +47,60 @@ const number = {
         numberElement.append(cardWapper);
 
         const healthValue =  document.createElement('div');
-        healthValue.classList.add("health");
+        healthValue.classList.add(`${valueOrHealth}`);
         cardWapper.append(healthValue);
         healthValue.innerText = numberValue;
 
         grid.gridElement.append(numberElement);
+    },
+    spawn: function() {
+        let randomHealth = this.randomValue(2, 4);
+        let elementClass = 'number';
+        let valueOrHealth = 'health';
+
+        this.createCard(randomHealth, elementClass, valueOrHealth);
+        
+        return true;
+    },
+    spawnGhost: function() {
+        let randomHealth = this.randomValue(2, 5);
+        let elementClass = 'ghost';
+        let valueOrHealth = 'health';
+
+        this.createCard(randomHealth, elementClass, valueOrHealth);
         
         return true;
     },
     spawnHeal: function() {
-        const emptyCellIndex = grid.randomEmptyCellIndex(); //случайное число от 1-9 либо false
-
-        if(emptyCellIndex === false) {
-            return false;
-        }
-        
         let randomHealth = this.randomValue(2, 8);
-
-        const healElement = document.createElement("div");
-        const numberValue = randomHealth;
-
-        healElement.dataset.value = numberValue; //пригодиться для сложения чисел
-        healElement.classList.add("heal");
-
-        healElement.style.top = `${grid.cells[emptyCellIndex].top}px`;
-        healElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
-
-        grid.cells[emptyCellIndex].number = healElement;
-
-        const cardWapper = document.createElement('div');
-        cardWapper.classList.add("card__wrapper");
-        healElement.append(cardWapper);
-
-        const healthValue =  document.createElement('div');
-        healthValue.classList.add("value");
-        cardWapper.append(healthValue);
-        healthValue.innerText = numberValue;
-
-        grid.gridElement.append(healElement);
+        let elementClass = 'heal';
+        let valueOrHealth = 'value';
         
+        this.createCard(randomHealth, elementClass, valueOrHealth);
+
         return true;
     },
     spawnWeapon: function() {
-        const emptyCellIndex = grid.randomEmptyCellIndex(); //случайное число от 1-9 либо false
-
-        if(emptyCellIndex === false) {
-            return false;
-        }
+        let randomHealth = this.randomValue(2, 8);
+        let elementClass = 'weapon';
+        let valueOrHealth = 'value';
         
-        let randomWeapon = this.randomValue(2, 8);
+        this.createCard(randomHealth, elementClass, valueOrHealth);
 
-        const weaponElement = document.createElement("div");
-        const numberValue = randomWeapon;
-
-        weaponElement.dataset.value = numberValue; 
-        weaponElement.classList.add("weapon");
-
-        weaponElement.style.top = `${grid.cells[emptyCellIndex].top}px`;
-        weaponElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
-
-        grid.cells[emptyCellIndex].number = weaponElement;
-
-        const cardWapper = document.createElement('div');
-        cardWapper.classList.add("card__wrapper");
-        weaponElement.append(cardWapper);
-
-        const healthValue =  document.createElement('div');
-        healthValue.classList.add("value");
-        cardWapper.append(healthValue);
-        healthValue.innerText = numberValue;
-
-        grid.gridElement.append(weaponElement);
-        
         return true;
     },
     spawnCoin: function() {
-        const emptyCellIndex = grid.randomEmptyCellIndex(); //случайное число от 1-9 либо false
-
-        if(emptyCellIndex === false) {
-            return false;
-        }
-        
-        //let randomCoin = this.randomValue(2, 8);
-
-        const coinElement = document.createElement("div");
-        const numberValue = 1;
-
-        coinElement.dataset.value = numberValue; 
-        coinElement.classList.add("coin");
-
-        coinElement.style.top = `${grid.cells[emptyCellIndex].top}px`;
-        coinElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
-
-        grid.cells[emptyCellIndex].number = coinElement;
-
-        const cardWapper = document.createElement('div');
-        cardWapper.classList.add("card__wrapper");
-        coinElement.append(cardWapper);
-
-        const healthValue =  document.createElement('div');
-        healthValue.classList.add("value");
-        cardWapper.append(healthValue);
-        healthValue.innerText = numberValue;
-
-        grid.gridElement.append(coinElement);
-        
+        let randomHealth = 1;
+        let elementClass = 'coin';
+        let valueOrHealth = 'value';
+        this.createCard(randomHealth, elementClass, valueOrHealth);
+        return true;
+    },
+    spawnPoison: function() {
+        let randomHealth = 1;
+        let elementClass = 'poison';
+        let valueOrHealth = 'value';
+        this.createCard(randomHealth, elementClass, valueOrHealth);
         return true;
     },
  }

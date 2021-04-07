@@ -23,6 +23,7 @@ const grid = {
                 left: cellElement.offsetLeft,
                 cell_number: cellIndex, //номер клетки 1-9
                 number: null,
+                disembodied: false,
             }
 
             cellIndex++;
