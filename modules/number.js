@@ -39,6 +39,8 @@ const number = {
 
         numberElement.style.top = `${grid.cells[emptyCellIndex].top}px`;
         numberElement.style.left = `${grid.cells[emptyCellIndex].left}px`;
+        numberElement.classList.add('card_rotate');
+        
 
         grid.cells[emptyCellIndex].number = numberElement;
 
@@ -52,6 +54,12 @@ const number = {
         healthValue.innerText = numberValue;
 
         grid.gridElement.append(numberElement);
+
+        setTimeout (function() {
+            numberElement.classList.add('card_rotate0');
+            numberElement.classList.remove('card_rotate');
+            numberElement.classList.remove('card_rotate0');
+        }, 100);
     },
     spawn: function() {
         let randomHealth = this.randomValue(2, 4);

@@ -169,13 +169,12 @@ body, html {
     width: 100%;
     height: 68vmin; 
     position: relative;
-    background-color:#aaaca8;
+    background-color:#272925;
 }
 .cell{
     width: 20vmin;
     height: 20vmin;
     margin: 2vmin 2vmin 0 0;
-    background-color: #c5c6be;
     float: left;
 }
 .cell:nth-child(3n+1) {
@@ -190,7 +189,7 @@ body, html {
     text-align: center;
     line-height: 5vmin;
     color: #fff;
-    transition: all .3s;
+    transition: all .2s ease-in-out;
     background-image: url(../img/orc.svg);
     background-size: 65%;
     background-position: center;
@@ -206,7 +205,7 @@ body, html {
     text-align: center;
     line-height: 5vmin;
     color: #fff;
-    transition: all .3s;
+    transition: all .2s ease-in-out;
     background-image: url(../img/ghost.svg);
     background-size: 60%;
     background-position: center;
@@ -227,7 +226,7 @@ body, html {
     background-color: #383636;
     background-repeat: no-repeat;
     color: #fff;
-    transition: all .3s;
+    transition: all .2s ease-in-out;
 }
 .weapon{
     position: absolute;
@@ -238,12 +237,21 @@ body, html {
     text-align: center;
     line-height: 5vmin;
     color: #fff;
-    transition: all .3s;
+    transition: all .2s ease-in-out;
     background-image: url(../img/axe.svg);
     background-size: 62%;
     background-color: #383636;
     background-repeat: no-repeat;
     background-position: center;
+}
+.weapon_equip{
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    background-image: url(../img/axe.svg);
+    background-size: 45%;
+    background-repeat: no-repeat;
+    background-position: 95% 70%;
 }
 .coin{
     position: absolute;
@@ -254,12 +262,21 @@ body, html {
     text-align: center;
     line-height: 5vmin;
     color: #fff;
-    transition: all .3s;
+    transition: all .2s ease-in-out;
     background-image: url(../img/coin.svg);
     background-size: 50%;
     background-color: #383636;
     background-repeat: no-repeat;
     background-position: center;
+}
+.card_rotate{
+    transform: rotateY(90deg);
+}
+.card_rotate0{
+    transform: rotateY(0deg);
+}
+.card_scale{
+    transform: scale(0);
 }
 .poison{
     position: absolute;
@@ -270,7 +287,7 @@ body, html {
     text-align: center;
     line-height: 5vmin;
     color: #fff;
-    transition: all .3s;
+    transition: all .2s ease-in-out;
     background-image: url(../img/potion.svg);
     background-size: 60%;
     background-color: #383636;
@@ -286,7 +303,7 @@ body, html {
     text-align: center;
     line-height: 5vmin;
     color: #fff;
-    transition: all .3s;
+    transition: all .2s linear;
     background-image: url(../img/bigfoot.svg);
     background-size: 65%;
     background-color: #383636;
@@ -310,6 +327,7 @@ body, html {
     background-image: url(../img/heart.svg);
     background-repeat: no-repeat;
     background-position: center;
+    transition: all .3s;
 }
 .value{
     position: absolute;
@@ -357,6 +375,22 @@ body, html {
     width: 100%;
     height: 100%;
     background-image: url(../img/poisonc5t.gif);
+    background-size: cover;
+    background-position: center;
+}
+.slash_attack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.slash_attack::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/slashOAttck.gif);
     background-size: cover;
     background-position: center;
 }

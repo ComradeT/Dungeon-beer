@@ -146,12 +146,14 @@ function moveToCell(from_Cell, direction){
         } else {
             grid.playable = true;
         };
-    }, 300)
+    }, 500)
 };
 
 function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
     let toCellValue = to_Cell.number.dataset.value;
     let toCellClass = to_Cell.number.className;
+    let eqouipWeapon = document.createElement('div');
+        eqouipWeapon.classList.add("weapon_equip");
 
     if(toCellClass === 'number' || toCellClass === 'ghost') {
         if (toCellClass === 'ghost' && to_Cell.disembodied === true){
@@ -168,10 +170,14 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
             from_Cell.number = toCellDiv;
 
             to_Cell.disembodied = false;
-            from_Cell.number.childNodes[0].childNodes[0].style.display = 'block';
+            from_Cell.number.childNodes[0].childNodes[0].style.opacity = '1';
+            from_Cell.number.style.opacity = '1';
             return;
         } else if(Hero.attack > 0){
             if(Hero.attack < toCellValue){
+                from_Cell.number.childNodes[0].childNodes[2].remove();
+                to_Cell.number.childNodes[0].classList.add('slash_attack');
+                to_Cell.number.style.transform = 'scale(0.9)';
                 toCellValue -= Hero.attack;
                 to_Cell.number.childNodes[0].childNodes[0].innerText = toCellValue;
                 to_Cell.number.dataset.value = toCellValue;
@@ -179,27 +185,41 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
                 if (toCellClass === 'ghost') {
                     to_Cell.disembodied = true;
-                    to_Cell.number.childNodes[0].childNodes[0].style.display = 'none';
+                    to_Cell.number.childNodes[0].childNodes[0].style.opacity = '0';
+                    to_Cell.number.style.opacity = '0.5';
                 }
+                setTimeout(function() {
+                    to_Cell.number.style.transform = 'scale(1)';
+                    to_Cell.number.childNodes[0].classList.remove('slash_attack');
+                }, 200);
                 stepFinish();
                 return;
             } else if(Hero.attack >= toCellValue) {
+                to_Cell.number.childNodes[0].classList.add('slash_attack');
+                to_Cell.number.style.transform = 'scale(0.9)';
                 Hero.attack -= +toCellValue;
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
-                grid.gridElement.removeChild(to_Cell.number);
-                to_Cell.number = null;
-                number.spawnCoin();
-                stepFinish();
+                to_Cell.number.classList.add('card_rotate');
+                if(Hero.attack === 0) {
+                    from_Cell.number.childNodes[0].childNodes[2].remove();
+                }
+                setTimeout (function() {
+                    grid.gridElement.removeChild(to_Cell.number);
+                    to_Cell.number = null;
+                    number.spawnCoin();
+                    stepFinish();
+                }, 100);
+                setTimeout(function() {
+                    to_Cell.number.style.transform = 'scale(1)';
+                    to_Cell.number.childNodes[0].classList.remove('slash_attack');
+                }, 200);
                 return;
             }
         } else{
-            //to_Cell.number.style.transform = 'scale(0)';
             Hero.number -= +toCellValue;
             from_Cell.number.childNodes[0].childNodes[0].innerText = Hero.number;
-            grid.gridElement.removeChild(to_Cell.number);
         }
     } else if(toCellClass === 'heal') {
-        grid.gridElement.removeChild(to_Cell.number);
         Hero.poisoned = false;
         if (Hero.number < from_Cell.number.dataset.value) {
             let lackHealth = (from_Cell.number.dataset.value - Hero.number);
@@ -214,50 +234,53 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         }
     } else if(toCellClass === 'weapon') {
         if (Hero.attack < toCellValue) {
-            grid.gridElement.removeChild(to_Cell.number);
             Hero.attack = +toCellValue;
             from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
-        } else{
-            grid.gridElement.removeChild(to_Cell.number);
+            from_Cell.number.childNodes[0].append(eqouipWeapon);
         }
     } else if(toCellClass === 'coin') {
-        grid.gridElement.removeChild(to_Cell.number);
         let goldPanel = document.querySelector('.gold');
         Hero.gold += +toCellValue;
         goldPanel.innerText = Hero.gold;
     } else if(toCellClass === 'poison'){
-        grid.gridElement.removeChild(to_Cell.number);
         Hero.poisoned = true;
     }
 
-    stepFinish(from_Cell);
+    stepFinish();
+    to_Cell.number.classList.add('card_scale');
+    
+    setTimeout(function() {
+        to_Cell.number.classList.remove('card_scale');
+        grid.gridElement.removeChild(to_Cell.number);
 
-    from_Cell.number.style.top = `${to_Cell.top}px`;
-    from_Cell.number.style.left = `${to_Cell.left}px`;
+        from_Cell.number.style.top = `${to_Cell.top}px`;
+        from_Cell.number.style.left = `${to_Cell.left}px`;
 
-    to_Cell.number = from_Cell.number;
-    Hero.cell_number = to_Cell.cell_number;
+        to_Cell.number = from_Cell.number;
+        Hero.cell_number = to_Cell.cell_number;
+    }, 150);
+    setTimeout(function() {
+        if (behind_cell.number.className === 'ghost' && behind_cell.disembodied === true) {
+            behind_cell.number.style.top = `${from_Cell.top}px`;
+            behind_cell.number.style.left = `${from_Cell.left}px`;
+            from_Cell.disembodied = true;
+            behind_cell.disembodied = false;
+        } else {
+            behind_cell.number.style.top = `${from_Cell.top}px`;
+            behind_cell.number.style.left = `${from_Cell.left}px`;
+        }
 
-    if (behind_cell.number.className === 'ghost' && behind_cell.disembodied === true) {
-        behind_cell.number.style.top = `${from_Cell.top}px`;
-        behind_cell.number.style.left = `${from_Cell.left}px`;
-        from_Cell.disembodied = true;
-        behind_cell.disembodied = false;
-    } else {
-        behind_cell.number.style.top = `${from_Cell.top}px`;
-        behind_cell.number.style.left = `${from_Cell.left}px`;
-    }
+        from_Cell.number = behind_cell.number;
+        behind_cell.number = null;
 
-    from_Cell.number = behind_cell.number;
-    behind_cell.number = null;
+        if (two_behind_cell) {
+            two_behind_cell.number.style.top = `${behind_cell.top}px`;
+            two_behind_cell.number.style.left = `${behind_cell.left}px`;
 
-    if (two_behind_cell) {
-        two_behind_cell.number.style.top = `${behind_cell.top}px`;
-        two_behind_cell.number.style.left = `${behind_cell.left}px`;
-
-        behind_cell.number = two_behind_cell.number;
-        two_behind_cell.number = null;
-    }
+            behind_cell.number = two_behind_cell.number;
+            two_behind_cell.number = null;
+        }
+    }, 300)
 
 };
 
@@ -268,11 +291,14 @@ function stepFinish() {
         if (Hero.number > 1){
             Hero.number -= 1;
             heroWrapper.classList.add('poisoned');
+        } else {
+            heroWrapper.classList.remove('poisoned');
         }
         heroValue.innerText = Hero.number;
     } else {
         heroWrapper.classList.remove('poisoned');
     }
 }
+
 
 export {Hero, moveToCell}
