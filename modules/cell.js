@@ -155,7 +155,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
     let eqouipWeapon = document.createElement('div');
         eqouipWeapon.classList.add("weapon_equip");
 
-    if(toCellClass === 'number' || toCellClass === 'ghost') {
+    if(toCellClass === 'number' || toCellClass === 'ghost' || toCellClass === 'giant' || toCellClass === 'yeti') {
         if (toCellClass === 'ghost' && to_Cell.disembodied === true){
             let fromPosTop = from_Cell.top;
             let fromPosLeft = from_Cell.left;
@@ -244,6 +244,20 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         goldPanel.innerText = Hero.gold;
     } else if(toCellClass === 'poison'){
         Hero.poisoned = true;
+    } else if(toCellClass === 'mountain'){
+        to_Cell.number.classList.add('card_rotate');
+        setTimeout (function() {
+            grid.gridElement.removeChild(to_Cell.number);
+            to_Cell.number = null;
+            let randomNumber = number.randomValue(1, 100);
+            if (randomNumber >= 50) {
+                number.spawnYety();
+            } else{
+                number.spawnCoin();
+            }
+            stepFinish();
+        }, 100);
+        return
     }
 
     stepFinish();

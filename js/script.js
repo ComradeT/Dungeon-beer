@@ -42,12 +42,10 @@ document.addEventListener('keyup', function(e) {
 
 let gridDiv = document.querySelector('.grid');
 swipe(gridDiv, { maxTime: 1000, minTime: 100, maxDist: 150,  minDist: 60 });
-gridDiv.addEventListener("swipe", function(e) {
-    console.log(e.detail);
-
+gridDiv.addEventListener('swipe', function(e) {
     let direction = null;
 
-   if(e.detail.dir == 'up') {
+    if(e.detail.dir == 'up') {
         direction = 'UP';
     } else if(e.detail.dir == 'right') {
         direction = 'RIGHT';

@@ -46,11 +46,25 @@ const grid = {
         }
 
         if(emptyCells.length === 0) {
-            // no empty cell, game over
             return false;
         }
 
         return emptyCells[ Math.floor(Math.random() * emptyCells.length) ];
+    },
+    randomCellIndex: function() {
+        let anyCells = [];
+        
+        for (let i = 1; i < this.cells.length; i++) {
+            if(this.cells[i].number !== null && this.cells[i].number.className !== 'hero' && this.cells[i].number.className !== 'giant') {
+                anyCells.push(i);
+            }
+        }
+
+        if(anyCells.length === 0) {
+            return false;
+        }
+
+        return anyCells[ Math.floor(Math.random() * anyCells.length) ];
     },
     checkGameOver: function(){
         if(Hero.number <= 0){

@@ -19,8 +19,10 @@ const number = {
             this.spawnHeal();
         } else if (randomNumber >= 80) {
             this.spawn();
-        } else if (randomNumber >= 60) {
+        } else if (randomNumber >= 70) {
             this.spawnGhost();
+        }else if (randomNumber >= 60) {
+            this.spawnIceGiant();
         }
 
     },
@@ -73,6 +75,39 @@ const number = {
     spawnGhost: function() {
         let randomHealth = this.randomValue(2, 5);
         let elementClass = 'ghost';
+        let valueOrHealth = 'health';
+
+        this.createCard(randomHealth, elementClass, valueOrHealth);
+        
+        return true;
+    },
+    spawnIceGiant: function(){
+        let randomHealth = this.randomValue(4, 7);
+        let elementClass = 'giant';
+        let valueOrHealth = 'health';
+
+        this.createCard(randomHealth, elementClass, valueOrHealth);
+
+        let anyCellIndex = grid.randomCellIndex();
+        let numberElement = grid.cells[anyCellIndex].number;
+        grid.gridElement.removeChild(numberElement);
+        grid.cells[anyCellIndex].number = null;
+
+        number.spawnMountain();
+        return true;
+    },
+    spawnMountain: function(){
+        let randomHealth = 1;
+        let elementClass = 'mountain';
+        let valueOrHealth = 'value';
+
+        this.createCard(randomHealth, elementClass, valueOrHealth);
+        
+        return true;
+    },
+    spawnYety: function() {
+        let randomHealth = this.randomValue(2, 6);
+        let elementClass = 'yeti';
         let valueOrHealth = 'health';
 
         this.createCard(randomHealth, elementClass, valueOrHealth);

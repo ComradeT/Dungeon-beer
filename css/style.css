@@ -212,6 +212,54 @@ body, html {
     background-color: #383636;
     background-repeat: no-repeat;
 }
+.giant{
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 3.5vmin;
+    font-weight: bold;
+    text-align: center;
+    line-height: 5vmin;
+    color: #fff;
+    transition: all .2s ease-in-out;
+    background-image: url(../img/troll.svg);
+    background-size: 70%;
+    background-position: center;
+    background-color: #383636;
+    background-repeat: no-repeat;
+}
+.yeti {
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 3.5vmin;
+    font-weight: bold;
+    text-align: center;
+    line-height: 5vmin;
+    color: #fff;
+    transition: all .2s ease-in-out;
+    background-image: url(../img/yeti.svg);
+    background-size: 70%;
+    background-position: center;
+    background-color: #383636;
+    background-repeat: no-repeat;
+}
+.mountain{
+    position: absolute;
+    height: 20vmin;
+    width: 20vmin;
+    font-size: 3.5vmin;
+    font-weight: bold;
+    text-align: center;
+    line-height: 5vmin;
+    color: #fff;
+    transition: all .2s ease-in-out;
+    background-image: url(../img/mountain.svg);
+    background-size: 85%;
+    background-position: center;
+    background-color: #383636;
+    background-repeat: no-repeat;
+}
 .heal{
     position: absolute;
     height: 20vmin;
