@@ -55,13 +55,11 @@ const grid = {
         let anyCells = [];
         
         for (let i = 1; i < this.cells.length; i++) {
-            if(this.cells[i].number !== null && this.cells[i].number.className !== 'hero' && this.cells[i].number.className !== 'giant') {
+            if(this.cells[i].number && this.cells[i].number.className !== 'hero' && this.cells[i].number.className !== 'giant card_rotate' && this.cells[i].number.className !== 'giant') {
+                anyCells.push(i);
+            } else if(this.cells[i].number === null){
                 anyCells.push(i);
             }
-        }
-
-        if(anyCells.length === 0) {
-            return false;
         }
 
         return anyCells[ Math.floor(Math.random() * anyCells.length) ];

@@ -90,10 +90,13 @@ const number = {
 
         let anyCellIndex = grid.randomCellIndex();
         let numberElement = grid.cells[anyCellIndex].number;
-        grid.gridElement.removeChild(numberElement);
-        grid.cells[anyCellIndex].number = null;
+        if(numberElement) {
+            grid.gridElement.removeChild(numberElement);
+            grid.cells[anyCellIndex].number = null;
+        }
 
         number.spawnMountain();
+
         return true;
     },
     spawnMountain: function(){

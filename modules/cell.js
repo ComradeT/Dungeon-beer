@@ -213,7 +213,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
                     to_Cell.number.style.transform = 'scale(1)';
                     to_Cell.number.childNodes[0].classList.remove('slash_attack');
                 }, 200);
-                return;
+                return false;
             }
         } else{
             Hero.number -= +toCellValue;
@@ -257,7 +257,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
             }
             stepFinish();
         }, 100);
-        return
+        return;
     }
 
     stepFinish();
