@@ -49,7 +49,7 @@ body, html {
     border-radius: 1vmin;
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 .book__img{
