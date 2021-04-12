@@ -27,6 +27,46 @@ body, html {
     margin: 0 auto; 
     position: relative;
 }
+.modalGameOver{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.596);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+.modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #854b25;
+    width: 75vmin;
+    height: 40vmin; 
+    border-radius: 2vmin;
+    font-size: 10vmin;
+}
+.modal p{
+    margin-top: 2vmin;
+    font-size: 8vmin;  
+}
+.yes{
+    font-size: 5vmin;
+    line-height: 5vmin;
+    border-radius: 1vmin;
+    padding: 1vmin;
+    background-color: transparent;
+    border: 2px solid black;
+    transition: background-color 0.5s;
+}
+.yes:hover{
+    background-color: green;
+}
 .book__container{
     background-color: rgb(70, 45, 17);
     position: absolute;
@@ -170,6 +210,10 @@ body, html {
     height: 68vmin; 
     position: relative;
     background-color:#272925;
+    cursor: url('../img/cursorWarcraftMen.png'), auto;
+}
+.grid:active{
+    cursor: url('../img/cursorActiveBig.png'), auto;
 }
 .cell{
     width: 20vmin;

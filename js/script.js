@@ -20,6 +20,39 @@ character.addEventListener('click', () => {
     }
 });
 
+let modal = document.querySelector('.modalGameOver');
+let restart = document.querySelectorAll('.yes');
+restart[0].addEventListener('click', () => {
+    modal.style.visibility = 'hidden';
+    regame();
+});
+restart[1].addEventListener('click', () => {
+    modal.style.visibility = 'hidden';
+    regame();
+});
+
+document.addEventListener('keyup', function(e) {
+
+    if(e.keyCode === 13) {
+        modal.style.visibility = 'hidden';
+        regame();
+    } 
+});
+
+let regame = function() {
+    for(let i = 1; i < grid.cells.length; i++){
+        grid.gridElement.removeChild(grid.cells[i].number);
+        grid.cells[i].number = null;
+    }
+    Hero.number = 10;
+    Hero.cell_number = null;
+    Hero.attack = 0;
+    Hero.gold = 0;
+    Hero.poisoned = false;
+    Hero.movement = true;
+    grid.init();
+}
+
 document.addEventListener('keyup', function(e) {
     let direction = null;
 

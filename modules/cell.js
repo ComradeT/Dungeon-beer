@@ -7,6 +7,7 @@ let Hero = {
     attack: 0,
     gold: 0,
     poisoned: false,
+    movement: true,
 
     spawn_Hero: function() {
         const emptyCellIndex = 5;
@@ -139,14 +140,17 @@ function moveToCell(from_Cell, direction){
     behind_cell = grid.cells[prev_cell_number];
     two_behind_cell = grid.cells[two_prev_cell_number];
     relocate(from_Cell, to_Cell, behind_cell, two_behind_cell);
-    setTimeout(function() {
-        number.spawnCard();
-        if(grid.checkGameOver()) {
-            alert("GAME OVER!");
-        } else {
-            grid.playable = true;
-        };
-    }, 500)
+    if (Hero.movement === true) {
+        setTimeout(function() {
+            number.spawnCard();
+            if(grid.checkGameOver()) {
+                let modal = document.querySelector('.modalGameOver');
+                modal.style.visibility = 'visible';
+            } else {
+                grid.playable = true;
+            };
+        }, 500)
+    }
 };
 
 function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
@@ -200,7 +204,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
                 Hero.attack -= +toCellValue;
                 from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
                 to_Cell.number.classList.add('card_rotate');
-                if(Hero.attack === 0) {
+                if(Hero.attack == 0) {
                     from_Cell.number.childNodes[0].childNodes[2].remove();
                 }
                 setTimeout (function() {
@@ -255,9 +259,12 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
             } else{
                 number.spawnCoin();
             }
+            Hero.movement = true;
             stepFinish();
         }, 100);
-        return;
+        Hero.movement = false;
+        grid.playable = true;
+        return false;
     }
 
     stepFinish();
@@ -295,7 +302,7 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
             two_behind_cell.number = null;
         }
     }, 300)
-
+    Hero.movement = true;
 };
 
 function stepFinish() {
