@@ -159,14 +159,9 @@ body, html {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    position: relative;
 }
 .character span{
-    position: relative;
-    display: block;
-    font-size: 12px;
-}
-.character span::before{
-    content: '10';
     position: absolute;
     bottom: 0vmin;
     right: -1vmin;
@@ -178,8 +173,13 @@ body, html {
     background-repeat: no-repeat;
     text-align: center;
     font-weight: 900;
+    font-size: 12px;
     color: rgb(68, 53, 53);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .character:hover{
     transform: scale(1.1);
 }

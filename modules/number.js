@@ -57,6 +57,12 @@ const number = {
 
         grid.gridElement.append(numberElement);
 
+        if(elementClass == 'ghost') {
+            grid.cells[emptyCellIndex].disembodied = true;
+            grid.cells[emptyCellIndex].number.childNodes[0].childNodes[0].style.opacity = '0';
+            grid.cells[emptyCellIndex].number.style.opacity = '0.5';
+        }
+
         setTimeout (function() {
             numberElement.classList.add('card_rotate0');
             numberElement.classList.remove('card_rotate');

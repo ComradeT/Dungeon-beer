@@ -240,7 +240,9 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         if (Hero.attack < toCellValue) {
             Hero.attack = +toCellValue;
             from_Cell.number.childNodes[0].childNodes[1].innerText = Hero.attack;
-            from_Cell.number.childNodes[0].append(eqouipWeapon);
+            if(!from_Cell.number.childNodes[0].childNodes[2]){
+                from_Cell.number.childNodes[0].append(eqouipWeapon);
+            }
         }
     } else if(toCellClass === 'coin') {
         let goldPanel = document.querySelector('.gold');
@@ -295,9 +297,16 @@ function relocate(from_Cell, to_Cell, behind_cell, two_behind_cell){
         behind_cell.number = null;
 
         if (two_behind_cell) {
-            two_behind_cell.number.style.top = `${behind_cell.top}px`;
-            two_behind_cell.number.style.left = `${behind_cell.left}px`;
-
+            if (two_behind_cell.number.className === 'ghost' && two_behind_cell.disembodied === true){
+                two_behind_cell.number.style.top = `${behind_cell.top}px`;
+                two_behind_cell.number.style.left = `${behind_cell.left}px`;
+                behind_cell.disembodied = true;
+                two_behind_cell.disembodied = false;
+            } else {
+                two_behind_cell.number.style.top = `${behind_cell.top}px`;
+                two_behind_cell.number.style.left = `${behind_cell.left}px`;
+            }
+            
             behind_cell.number = two_behind_cell.number;
             two_behind_cell.number = null;
         }
