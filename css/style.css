@@ -23,7 +23,7 @@ body, html {
     background-position: 50% 0%;
 }
 .container{
-    width: 90vmax; 
+    width: 90vw; 
     margin: 0 auto; 
     position: relative;
 }
@@ -67,7 +67,49 @@ body, html {
 .yes:hover{
     background-color: green;
 }
-.book__container{
+.modalRulesContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.596);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+.modalRules{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #854b25;
+    width: 75vmin;
+    height: 40vmin; 
+    border-radius: 2vmin;
+    font-size: 5vmin;
+    font-family: 'Balsamiq Sans';
+}
+.modalRules p{
+    margin-top: 2vmin;
+    font-size: 4vmin;  
+    padding: 2vmin;
+}
+.btn_rules{
+    font-size: 5vmin;
+    line-height: 5vmin;
+    border-radius: 1vmin;
+    padding: 1vmin;
+    background-color: transparent;
+    border: 2px solid black;
+    transition: background-color 0.5s;
+}
+.btn_rules:hover{
+    background-color: green;
+}
+/* .book__container{
     background-color: rgb(70, 45, 17);
     position: absolute;
     top: 3vmin;
@@ -131,7 +173,7 @@ body, html {
     font-size: 2.5vmin;
     line-height: 3.4vmin;
     font-family: 'Balsamiq Sans';
-}
+} */
 .wrapper{
     width: 68vmin; 
     margin: 0 auto; 
@@ -204,6 +246,15 @@ body, html {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+.rules{
+    font-size: 3vmin;
+    color: white;
+    font-family: 'Balsamiq Sans';
+    cursor: pointer;
+}
+.rules:hover{
+    color: gold;
 }
 .grid {
     width: 100%;

@@ -30,6 +30,17 @@ restart[1].addEventListener('click', () => {
     regame();
 });
 
+//Rules
+let modalRules = document.querySelector('.modalRulesContainer');
+let btnRules = document.querySelector('.btn_rules');
+let rules = document.querySelector('.rules');
+rules.addEventListener('click', () => {
+    modalRules.style.visibility = 'visible';
+})
+btnRules.addEventListener('click', () => {
+    modalRules.style.visibility = 'hidden';
+})
+
 document.addEventListener('keyup', function(e) {
 
     if(e.keyCode === 13) {
